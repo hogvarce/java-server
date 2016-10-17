@@ -1,0 +1,42 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+	repositories {
+		maven {
+			url 'http://10.0.7.10:8082/nexus/content/groups/public/'
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'application'
+
+jar {
+	baseName = 'mini'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = "ru.servachek.MiniApplication"
+
+repositories {
+	maven {
+        url 'http://10.0.7.10:8082/nexus/content/groups/public/'
+    }
+}
+
+
+dependencies {
+	compile group: 'com.google.guava', name: 'guava', version: '19.0'
+	compile('org.springframework.boot:spring-boot-starter-web:1.4.1.RELEASE')
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb:1.4.1.RELEASE')
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
