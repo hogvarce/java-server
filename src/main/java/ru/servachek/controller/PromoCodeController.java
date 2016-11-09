@@ -40,6 +40,7 @@ public class PromoCodeController {
         if (filters == null) {
             return promoCodeService.getPage(pageRequest);
         }
+
         return promoCodeService.getPage(pageRequest, filterFields);
     }
 

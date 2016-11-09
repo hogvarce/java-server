@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * Created by Ganzhenko on 19.10.2016.
  */
@@ -13,16 +15,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Filters {
-    private String selectedPromoActionsLabel;
-    private String selectedPromoActionsName;
-    private String selectedPromoActionsType;
+    private List dataLabel;
+    private String label;
+    private List dataTitle;
+    private String title;
+    private List dataMechanics;
+    private String mechanics;
+    private List selectedActiveOptions;
+    private List regions;
+    private Integer[] priorityRange;
+    private Integer startPriorityRange = 0;
+    private Integer endPriorityRange = 100;
     private String actionDates;
     private String timeAction;
-    private Integer[] selectedRegionListValue;
-    private Integer[] activeValues;
-    private Integer[] sliderValues;
     private String creationDates;
-    private Integer[] promoTypeValues;
-
-
+    private Boolean showSelectTime;
 }

@@ -5,8 +5,6 @@ import org.springframework.data.domain.Pageable;
 import ru.servachek.model.Filters;
 import ru.servachek.model.PromoSale;
 
-import java.util.List;
-
 /**
  * Created by Ganzhenko on 11.10.2016.
  */

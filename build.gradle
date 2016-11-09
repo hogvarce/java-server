@@ -1,43 +1,70 @@
 buildscript {
-	ext {
-		springBootVersion = '1.4.1.RELEASE'
-	}
-	repositories {
-		maven {
-			url 'http://10.0.7.10:8082/nexus/content/groups/public/'
-		}
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.4.1.RELEASE'
+    }
+    repositories {
+        maven {
+            url 'http://10.0.7.10:8082/nexus/content/groups/public/'
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'application'
 
 jar {
-	baseName = 'mini'
-	version = '0.0.1-SNAPSHOT'
+    baseName = 'mini'
+    version = '0.0.1-SNAPSHOT'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 mainClassName = "ru.servachek.MiniApplication"
 
 repositories {
-	maven {
+    maven {
         url 'http://10.0.7.10:8082/nexus/content/groups/public/'
     }
 }
 
+idea {
+    module {
+        sourceDirs += file('generated/')
+    }
+}
+
+
+//compileJava {
+//    options.compilerArgs << "-s"
+//    options.compilerArgs << "$projectDir/src/main/java"
+//}
+//
+//sourceSets {
+//    generated {
+//        java {
+//            srcDir "$projectDir/generated/java"
+//        }
+//    }
+//}
+
+
 
 dependencies {
-	compile group: 'com.google.guava', name: 'guava', version: '19.0'
-	compile('org.springframework.boot:spring-boot-starter-web:1.4.1.RELEASE')
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb:1.4.1.RELEASE')
-	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
-	compile("org.springframework.boot:spring-boot-starter-actuator")
-	compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile('org.springframework.boot:spring-boot-starter-web:1.4.1.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb:1.4.1.RELEASE')
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile group: 'com.querydsl', name: 'querydsl-core', version: '4.1.4'
+    compile group: 'com.querydsl', name: 'querydsl-mongodb', version: '4.1.4'
+    compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.1.4'
+    compile 'com.querydsl:querydsl-apt:4.1.4:jpa'
+    compile group: 'org.eclipse.persistence', name: 'javax.persistence', version: '2.1.1'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }

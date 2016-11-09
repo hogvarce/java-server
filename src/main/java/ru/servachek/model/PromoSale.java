@@ -1,16 +1,24 @@
 package ru.servachek.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
+import ru.servachek.converter.DateStringSerializer;
+import ru.servachek.converter.StringDateDeserializer;
 
+import javax.persistence.Entity;
 import java.util.Date;
 import java.util.List;
 
+@QueryEntity
+@Entity
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,8 +27,12 @@ import java.util.List;
 public class PromoSale {
     @JsonProperty("promo_id")
     private String id;
-    private String created_at = new Date().toString(); // дата создание
-    private String updated_at; // Дата обновления
+    @JsonSerialize(using = DateStringSerializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
+    private Date created_at = new Date(); // дата создание
+    @JsonSerialize(using = DateStringSerializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
+    private Date updated_at; // Дата обновления
     private String start_time = "00:00:00"; // 00:00:00
     private String end_time = "23:59:59"; // 23:59:59,
     private Integer priority; // Приоритет
@@ -39,5 +51,6 @@ public class PromoSale {
     private Integer max_quantity_per_sku; //   Максимальное количество  одинаковых SKU,
     private Boolean current; //   Указание признака что акция находится в  истории ,
     private Integer semFilterId; //   Идентификатор фильтра из SEM,
+    @TextIndexed
     private String label; //код промоакции
 }
