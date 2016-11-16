@@ -28,7 +28,7 @@ public class QPromoSale extends EntityPathBase<PromoSale> {
 
     public final ListPath<Object, SimplePath<Object>> discounts = this.<Object, SimplePath<Object>>createList("discounts", Object.class, SimplePath.class, PathInits.DIRECT2);
 
-    public final StringPath end_time = createString("end_time");
+    public final DateTimePath<java.util.Date> end_time = createDateTime("end_time", java.util.Date.class);
 
     public final DateTimePath<java.util.Date> finished_at = createDateTime("finished_at", java.util.Date.class);
 
@@ -56,7 +56,7 @@ public class QPromoSale extends EntityPathBase<PromoSale> {
 
     public final NumberPath<Integer> semFilterId = createNumber("semFilterId", Integer.class);
 
-    public final StringPath start_time = createString("start_time");
+    public final DateTimePath<java.util.Date> start_time = createDateTime("start_time", java.util.Date.class);
 
     public final DateTimePath<java.util.Date> started_at = createDateTime("started_at", java.util.Date.class);
 

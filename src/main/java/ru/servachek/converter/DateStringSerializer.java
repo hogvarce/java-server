@@ -14,7 +14,7 @@ import java.util.Date;
  * Created by Ganzhenko on 08.11.2016.
  */
 public class DateStringSerializer extends JsonSerializer<Date> {
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yy");
 
     @Override
     @SneakyThrows

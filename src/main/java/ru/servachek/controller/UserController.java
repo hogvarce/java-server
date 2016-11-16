@@ -23,7 +23,7 @@ public class UserController {
         if (token != null) {
             userAuth = userService.getUserByToken(token);
         } else if (userName != null) {
-            userAuth = userService.getuserByName(userName);
+            userAuth = userService.getUserByName(userName);
             if (userAuth != null && userAuth.getPassword().equals(password)) {
                 return userAuth;
             }  else {

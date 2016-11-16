@@ -12,8 +12,11 @@ import lombok.experimental.Accessors;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import ru.servachek.converter.DateStringSerializer;
 import ru.servachek.converter.StringDateDeserializer;
+import ru.servachek.converter.TimeStringSerializer;
 
 import javax.persistence.Entity;
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +36,12 @@ public class PromoSale {
     @JsonSerialize(using = DateStringSerializer.class)
     @JsonDeserialize(using = StringDateDeserializer.class)
     private Date updated_at; // Дата обновления
-    private String start_time = "00:00:00"; // 00:00:00
-    private String end_time = "23:59:59"; // 23:59:59,
+    @JsonSerialize(using = DateStringSerializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
+    private Date start_time; // 00:00:00
+    @JsonSerialize(using = DateStringSerializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
+    private Date end_time; // 23:59:59,
     private Integer priority; // Приоритет
     private Integer min_price = 0; //  Минимальная суммарная стоимость акционных товаров(набора продуктов),по умолчанию 0,
     private Integer max_price = 0;  //  Максимальная суммарная  стоимость акционных товаров(набора продуктов),по умолчанию 0,

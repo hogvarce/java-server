@@ -13,9 +13,11 @@ import ru.servachek.model.Filters;
 import ru.servachek.model.PromoSale;
 import ru.servachek.model.PromoSales;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by Ganzhenko on 12.10.2016.
  */
 public interface PromoSaleRepository extends MongoRepository<PromoSale, String>, QueryDslPredicateExecutor<PromoSale> {
-
 }

@@ -7,6 +7,6 @@ import ru.servachek.model.User;
  */
 public interface UserService {
     User getUserByToken(String token);
-    User getuserByName(String userName);
+    User getUserByName(String userName);
 }
 

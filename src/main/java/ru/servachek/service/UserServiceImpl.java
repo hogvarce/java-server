@@ -18,14 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     private void setUp() {
-        repository.deleteAll();
-        User admin = User.builder()
-                .userName("admin")
-                .password("admin")
-                .id("1")
-                .token("111")
-                .build();
-        repository.save(admin);
+
     }
 
 
@@ -35,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getuserByName(String userName) {
+    public User getUserByName(String userName) {
         return repository.findByUserName(userName);
     }
 

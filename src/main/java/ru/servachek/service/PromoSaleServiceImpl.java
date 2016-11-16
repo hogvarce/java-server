@@ -18,9 +18,7 @@ import ru.servachek.repository.PromoSaleRepository;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Log4j
@@ -30,21 +28,29 @@ public class PromoSaleServiceImpl implements PromoSaleService {
     private PromoSaleRepository repository;
     private Random random;
     private BooleanExpression result;
+    private Calendar calendar;
 
 
     @PostConstruct
     private void setUp() {
-        repository.deleteAll();
-        for (int i = 0; i < 200; i++) {
-            random = new Random();
-            PromoSale promoSale = PromoSale.builder()
-                    .title((random.nextInt((120 - 100) + 1) + 100) + " процентов гарантии цены - gn3")
-                    .label("Промоакция#" + (i + 1))
-                    .disabled(false)
-                    .build();
-            save(promoSale);
-            System.out.println("promoSale = " + promoSale);
-        }
+//        repository.deleteAll();
+//        Calendar calendar = new GregorianCalendar();
+//        for (int i = 0; i < 200; i++) {
+//            random = new Random();
+//            calendar.set(2016, Calendar.NOVEMBER, random.nextInt((30 - 11) + 1) + 11);
+//            PromoSale promoSale = PromoSale.builder()
+//                    .title((random.nextInt((120 - 100) + 1) + 100) + " процентов гарантии цены - gn3")
+//                    .label("Промоакция#" + (i + 1))
+//                    .created_at(calendar.getTime())
+//                    .started_at(new Date())
+//                    .finished_at(calendar.getTime())
+//                    .start_time(new Date())
+//                    .end_time(calendar.getTime())
+//                    .disabled(false)
+//                    .priority(0)
+//                    .build();
+//            save(promoSale);
+//        }
     }
 
     @Override
@@ -58,6 +64,7 @@ public class PromoSaleServiceImpl implements PromoSaleService {
         QPromoSale qPromoSale = new QPromoSale("promosale");
         List<BooleanExpression> predicateList = new ArrayList<>();
         Field[] filterFields = filters.getClass().getDeclaredFields();
+        Date[] dates;
         for (Field field : filterFields) {
             field.setAccessible(true);
             if (field.get(filters) != null && !field.get(filters).equals("")) {
@@ -70,6 +77,10 @@ public class PromoSaleServiceImpl implements PromoSaleService {
                         break;
                     case "mechanics":
                         predicateList.add(qPromoSale.mechanics.contains((String) field.get(filters)));
+                        break;
+                    case "priorityRange":
+                        Integer[] priorityRange = (Integer[]) field.get(filters);
+                        predicateList.add(qPromoSale.priority.between(priorityRange[0], priorityRange[1]));
                         break;
                     case "selectedActiveOptions":
                         List<String> activeValues = (List<String>) field.get(filters);
@@ -84,6 +95,14 @@ public class PromoSaleServiceImpl implements PromoSaleService {
                             }
                         }
                         break;
+                    case "creationDates":
+                        dates = (Date[]) field.get(filters);
+                        predicateList.add(qPromoSale.created_at.between(dates[0], dates[1]));
+                        break;
+                    case "actionDates":
+                        dates = (Date[]) field.get(filters);
+                        predicateList.add(qPromoSale.started_at.between(dates[0], dates[1]));
+                        predicateList.add(qPromoSale.finished_at.between(dates[0], dates[1]));
                 }
             }
         }
