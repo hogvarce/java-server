@@ -101,6 +101,17 @@ public class PromoCodeTemplateServiceImpl implements PromoCodeTemplateService {
                     case "title":
                         predicateList.add(qPromoCodeTemplate.title.contains((String) field.get(filters)));
                         break;
+                    case "mask":
+                        predicateList.add(qPromoCodeTemplate.mask.contains((String) field.get(filters)));
+                        break;
+                    case "creationDates":
+                        dates = (Date[]) field.get(filters);
+                        predicateList.add(qPromoCodeTemplate.created_at.between(dates[0], dates[1]));
+                        break;
+                    case "updateDates":
+                        dates = (Date[]) field.get(filters);
+                        predicateList.add(qPromoCodeTemplate.updated_at.between(dates[0], dates[1]));
+                        break;
                 }
             }
         }
@@ -134,12 +145,13 @@ public class PromoCodeTemplateServiceImpl implements PromoCodeTemplateService {
 
     @Override
     public Task promoCodeGenerate(String id, int count) {
+
         PromoCodeTemplate promoCodeTemplate = repository.findOne(id);
 
         Task task = Task.builder()
                 .title(promoCodeTemplate.getTitle())
                 .created_at(new Date())
-                .status("Создана")
+                .status("in_progress")
                 .current_operation(0)
                 .total_operation(count)
                 .build();
@@ -148,8 +160,7 @@ public class PromoCodeTemplateServiceImpl implements PromoCodeTemplateService {
         char[] options = {'F', 'Z', 'P', 'E', 'N', 'T', 'L', 'C', 'D', 'O'};
         for (int i = 0; i < count; i++) {
 
-            task.setCurrent_operation(i+1);
-            task.setStatus("Выполняется");
+            task.setCurrent_operation(i + 1);
             taskService.update(task);
 
             random = new Random();
@@ -162,12 +173,19 @@ public class PromoCodeTemplateServiceImpl implements PromoCodeTemplateService {
 
             PromoCode promoCode = PromoCode.builder()
                     .code(generateCodeWithMask(promoCodeTemplate.getMask()))
+                    .promo_code_template(promoCodeTemplate)
                     .build();
             promoCodeRepository.save(promoCode);
         }
-        task.setStatus("Выполнена");
+        task.setStatus("finished_success");
         taskService.update(task);
         return task;
+
+    }
+
+    @Override
+    public PromoCodeTemplate getById(String id) {
+        return repository.findOne(id);
     }
 
     private String generateCodeWithMask(String mask) {

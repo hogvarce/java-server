@@ -32,5 +32,9 @@ public class Filters {
     private String timeAction;
     @JsonDeserialize(using = StringArrayToDate.class)
     private Date[] creationDates;
+    @JsonDeserialize(using = StringArrayToDate.class)
+    private Date[] updateDates;
     private Boolean showSelectTime;
+    private String mask;
+    private String[] status;
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LandingPage {
-    private Integer landing_page_id;
-    private String name;
-    private String uri;
+    private Integer landing_page_id = 0;
+    private String name = "Cool landing";
+    private String uri = "http://www.eldorado.ru";
 }

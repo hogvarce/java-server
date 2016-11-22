@@ -1,16 +1,20 @@
 package ru.servachek.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**
  * Created by Ganzhenko on 15.11.2016.
  */
+@QueryEntity
+@Entity
 @Data
 @Builder
 @AllArgsConstructor

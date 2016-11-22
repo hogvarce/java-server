@@ -31,28 +31,6 @@ public class PromoSaleServiceImpl implements PromoSaleService {
     private Calendar calendar;
 
 
-    @PostConstruct
-    private void setUp() {
-//        repository.deleteAll();
-//        Calendar calendar = new GregorianCalendar();
-//        for (int i = 0; i < 200; i++) {
-//            random = new Random();
-//            calendar.set(2016, Calendar.NOVEMBER, random.nextInt((30 - 11) + 1) + 11);
-//            PromoSale promoSale = PromoSale.builder()
-//                    .title((random.nextInt((120 - 100) + 1) + 100) + " процентов гарантии цены - gn3")
-//                    .label("Промоакция#" + (i + 1))
-//                    .created_at(calendar.getTime())
-//                    .started_at(new Date())
-//                    .finished_at(calendar.getTime())
-//                    .start_time(new Date())
-//                    .end_time(calendar.getTime())
-//                    .disabled(false)
-//                    .priority(0)
-//                    .build();
-//            save(promoSale);
-//        }
-    }
-
     @Override
     @SneakyThrows
     public Page<PromoSale> getPage(Pageable pageable, Filters filters) {

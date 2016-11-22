@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.servachek.model.PageRequestWrapper;
 import ru.servachek.model.PromoCodeTemplate;
 import ru.servachek.model.Task;
 import ru.servachek.service.PromoCodeTemplateService;
@@ -21,8 +19,12 @@ public class TaskController {
     private TaskService service;
 
     @RequestMapping("vms/task")
-    public Page<Task> getProgress(){
-        return service.getAll(new PageRequest(0, 20, Sort.Direction.DESC, "created_at"));
+    public Page<Task> getProgress(@RequestBody PageRequestWrapper requestWrapper){
+        if (requestWrapper.getFilters() == null) {
+            return service.getPage(requestWrapper.getPageRequest());
+        } else {
+            return service.getPage(requestWrapper.getPageRequest(), requestWrapper.getFilters());
+        }
     }
 
     @RequestMapping("vms/task/{id}")

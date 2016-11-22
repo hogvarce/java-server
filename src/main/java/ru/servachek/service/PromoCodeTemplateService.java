@@ -13,7 +13,12 @@ import java.util.List;
  */
 public interface PromoCodeTemplateService {
     Page<PromoCodeTemplate> getPage(Pageable pageable, Filters filters);
+
     Page<PromoCodeTemplate> getPage(Pageable pageable);
+
     void save(PromoCodeTemplate promoCodeTemplate);
+
     Task promoCodeGenerate(String id, int count);
+
+    PromoCodeTemplate getById(String id);
 }

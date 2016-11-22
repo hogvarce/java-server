@@ -1,11 +1,15 @@
 package ru.servachek.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import ru.servachek.converter.DateStringSerializer;
+import ru.servachek.converter.StringDateDeserializer;
 
 import java.util.Date;
 import java.util.List;
@@ -21,8 +25,12 @@ import java.util.List;
 public class PromoCode {
     @JsonProperty("promo_code_id")
     private String id;
-    private String created_at;
-    private String updated_at;
+    @JsonSerialize(using = DateStringSerializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
+    private Date created_at = new Date();
+    @JsonSerialize(using = DateStringSerializer.class)
+    @JsonDeserialize(using = StringDateDeserializer.class)
+    private Date updated_at;
     private Boolean disabled = false;
     private Integer number_of_uses = 0;
     private Integer max_number_of_uses = 0;

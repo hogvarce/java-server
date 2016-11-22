@@ -13,7 +13,7 @@ public class PageRequestWrapper {
     private Filters filters;
 
     public PageRequest getPageRequest() {
-        int page = (offset / size);
+        int page = offset / size;
         Sort.Direction direction = sort.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         return new PageRequest(page, size, direction, sortBy);
     }
